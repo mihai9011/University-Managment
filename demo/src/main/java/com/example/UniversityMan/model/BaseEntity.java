@@ -1,7 +1,9 @@
 package com.example.UniversityMan.model;
 
+import java.util.UUID;
+
 public abstract class BaseEntity {
-	private String id;
+	private String id = UUID.randomUUID().toString();
 
 
 	public String getId() { return id; }
