@@ -20,6 +20,7 @@ public abstract class BaseRepo<T extends BaseEntity> {
         //copy so it cant be modified
         return new ArrayList<>(list);   
     }
+    
     public T findById(String id) {
         for(T ent : list){
             if(ent.getId().equals(id)){
