@@ -2,7 +2,9 @@ package com.example.UniversityMan.repository;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class EnrollmentRepository {
+import com.example.UniversityMan.model.Enrollment;
 
+@Repository
+public class EnrollmentRepository extends BaseRepo<Enrollment>{
+    EnrollmentRepository(){};
 }
