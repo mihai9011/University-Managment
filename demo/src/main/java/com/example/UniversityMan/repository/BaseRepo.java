@@ -2,7 +2,6 @@ package com.example.UniversityMan.repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.example.UniversityMan.model.BaseEntity;
 
