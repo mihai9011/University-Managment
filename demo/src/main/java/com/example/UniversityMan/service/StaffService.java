@@ -1,6 +1,7 @@
 package com.example.UniversityMan.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -8,29 +9,28 @@ import com.example.UniversityMan.model.Assistant;
 import com.example.UniversityMan.model.Staff;
 import com.example.UniversityMan.model.Teacher;
 import com.example.UniversityMan.model.TeachingAssignment;
+import com.example.UniversityMan.repository.DepartmentRepository;
 import com.example.UniversityMan.repository.StaffRepository;
+import com.example.UniversityMan.repository.TeachingAssignmentRepository;
 
 @Service
 public class StaffService {
     private final StaffRepository staffRepo;
-    //to validate departaments
-    private final DepartmentService depServ;
-    //to validate assignments
-    private final TeachingAssignmentService taServ;
+    private final DepartmentRepository depRepo;
+    private final TeachingAssignmentRepository taRepo;
 
-    StaffService(StaffRepository staffRepo, DepartmentService depServ,TeachingAssignmentService taServ ){
+    public StaffService(StaffRepository staffRepo, DepartmentRepository depRepo, TeachingAssignmentRepository taRepo){
         this.staffRepo = staffRepo;
-        this.depServ = depServ;
-        this.taServ = taServ;
+        this.depRepo = depRepo;
+        this.taRepo = taRepo;
     }
 
     public boolean isEmailTaken(String email, String ownId){
         if (email == null) return false;
 
         for(Staff staff: staffRepo.findAll()){
-            //compare only if staff is teacher
             if(staff instanceof Teacher teacher){
-                if(teacher.getEmail().equalsIgnoreCase(email) && !staff.getId().equals(ownId)){
+                if(teacher.getEmail() != null && teacher.getEmail().equalsIgnoreCase(email) && !staff.getId().equals(ownId)){
                     return true;
                 }
             }
@@ -39,25 +39,27 @@ public class StaffService {
     }
 
     public void checkAssignments(Staff staff){
-        //checking assignmnents
        if (staff.getAssignments() == null || staff.getAssignments().isEmpty()) {
             return;
        }
 
         for(TeachingAssignment ta : staff.getAssignments()){
-            if(taServ.getById(ta.getId()) == null){
+    
+            TeachingAssignment existingTa = taRepo.findById(ta.getId());
+            
+            if(existingTa == null){
                 throw new IllegalArgumentException("Teaching assignment with id " + ta.getId() + " doesn`t exist");
             }
 
-            if(!ta.getStaffId().equals(staff.getId())){
+            if(!Objects.equals(ta.getStaffId(), staff.getId())){
                 throw new IllegalArgumentException("Assignments Staff id doesnt match the staffs id");
             }
             
-            if(!ta.getCourseId().equals(taServ.getById(ta.getId()).getCourseId())){
+            if(!Objects.equals(ta.getCourseId(), existingTa.getCourseId())){
                 throw new IllegalArgumentException("Invalid Course id for assignment with id " + ta.getId());
             }
          
-            if(!ta.getManaging().equals(taServ.getById(ta.getId()).getManaging())){
+            if(!Objects.equals(ta.getManaging(), existingTa.getManaging())){
                 throw new IllegalArgumentException("Invalid Managing type for assignment with id " + ta.getId());
             }
         }
@@ -71,7 +73,6 @@ public class StaffService {
         checkAssignments(staff);
 
         if(staff instanceof Assistant assistant){
-
             if(assistant.getRole() == null){
                 throw new IllegalArgumentException("Assistant must have a role!");
             }
@@ -80,8 +81,6 @@ public class StaffService {
             return;
         }
 
-
-        //safe to cast, already checked if assistant
         Teacher teacher = (Teacher) staff;
 
         if(teacher.getEmail() == null){
@@ -108,7 +107,7 @@ public class StaffService {
             throw new IllegalArgumentException("E-mail taken!");
         }
 
-        if(depServ.getById(teacher.getDepartmentId()) == null){
+        if(depRepo.findById(teacher.getDepartmentId()) == null){
             throw new IllegalArgumentException("Department with id " + teacher.getDepartmentId() + " doesn`t exist!");
         }
         
@@ -130,7 +129,6 @@ public class StaffService {
     }
 
     public void delete(String id){
-
         if(!staffRepo.delete(id)){
             throw new IllegalArgumentException("Staff with id " + id + " not found");
         }

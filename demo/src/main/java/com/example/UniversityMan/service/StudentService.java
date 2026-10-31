@@ -18,7 +18,7 @@ public class StudentService {
 
     public boolean isEmailTaken(String email, String ownId){
         for(Student student: studentRepo.findAll()){
-            if(student.getEmail().equalsIgnoreCase(email) && !student.getId().equals(ownId)){
+            if(student.getEmail() == null && student.getEmail().equalsIgnoreCase(email) && !student.getId().equals(ownId)){
                 return true;
             }
         }
