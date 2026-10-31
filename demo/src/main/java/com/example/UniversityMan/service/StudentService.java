@@ -1,5 +1,6 @@
 package com.example.UniversityMan.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -15,32 +16,37 @@ public class StudentService {
         this.studentRepo = studentRepo;
     }
 
-    public boolean validateEmail(String email){
-        List<Student> students = studentRepo.findAll();
-
-        if(students.size() == 0)return true;
-
-        for(Student student: students){
-            if(student.getEmail().equals(email)){
-                return false;
+    public boolean isEmailTaken(String email, String ownId){
+        for(Student student: studentRepo.findAll()){
+            if(student.getEmail().equalsIgnoreCase(email) && !student.getId().equals(ownId)){
+                return true;
             }
         }
-
-        return true;
+        return false;
     }
 
     public void save(Student student){
-        if(student.getEmail().contains(" ")){
-            throw new IllegalArgumentException("E-mail contains spaces!");
+        if (student == null) {
+            throw new IllegalArgumentException("Student cannot be null!");
         }
-        
-        if(validateEmail(student.getEmail())){
-            studentRepo.save(student);
-            System.out.println("Student added.");
+
+        if (student.getName() == null || student.getName().isBlank()) {
+            throw new IllegalArgumentException("Student must have a name!");
         }
-        else{
-            System.out.println("Student e-mail already in use!");
+
+        if (student.getEmail() == null || student.getEmail().isBlank()) {
+            throw new IllegalArgumentException("Student must have an e-mail!");
+        }
+
+        if(student.getBirthDate() == null || student.getBirthDate().isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("Birth date must be in the past!");
+        }
+
+        if(isEmailTaken(student.getEmail(), student.getId())){
+            throw new IllegalArgumentException("Student e-mail already in use!");
         }    
+
+        studentRepo.save(student);
     }
 
     public List<Student> getAll(){
@@ -65,6 +71,4 @@ public class StudentService {
 
         System.out.println("Student with id " + id + " deleted.");
     }
-
-
 }
