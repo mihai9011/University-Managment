@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.UniversityMan.model.Assistant;
 import com.example.UniversityMan.model.Staff;
-import com.example.UniversityMan.model.Student;
 import com.example.UniversityMan.model.Teacher;
 import com.example.UniversityMan.model.TeachingAssignment;
 import com.example.UniversityMan.repository.StaffRepository;
