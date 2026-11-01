@@ -15,6 +15,7 @@ import java.util.List;
 public abstract class Staff extends BaseEntity {
 	private String name;
 	private List<TeachingAssignment> assignments = new ArrayList<>();
+	
 
 	protected Staff() {}
 
