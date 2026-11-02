@@ -6,13 +6,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.UniversityMan.model.Student;
-import com.example.UniversityMan.repository.StudentRepository;
+
+import com.example.UniversityMan.repository.Repo;
 
 @Service
 public class StudentService {
-    private final StudentRepository studentRepo;
+    private final Repo<Student> studentRepo;
 
-    StudentService(StudentRepository studentRepo){
+    StudentService(Repo<Student> studentRepo){
         this.studentRepo = studentRepo;
     }
 

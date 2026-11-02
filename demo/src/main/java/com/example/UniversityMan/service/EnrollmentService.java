@@ -4,18 +4,20 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.UniversityMan.model.Course;
 import com.example.UniversityMan.model.Enrollment;
-import com.example.UniversityMan.repository.CourseRepository;
-import com.example.UniversityMan.repository.EnrollmentRepository;
-import com.example.UniversityMan.repository.StudentRepository;
+import com.example.UniversityMan.model.Student;
+
+import com.example.UniversityMan.repository.Repo;
+
 
 @Service
 public class EnrollmentService {
-    private final EnrollmentRepository enrollmentRepo;
-    private final StudentRepository studentRepo;
-    private final CourseRepository courseRepo;
+    private final Repo<Enrollment> enrollmentRepo;
+    private final Repo<Student> studentRepo;
+    private final Repo<Course> courseRepo;
     
-    public EnrollmentService(EnrollmentRepository enrollmentRepo, StudentRepository studentRepo, CourseRepository courseRepo) {
+    public EnrollmentService(Repo<Enrollment> enrollmentRepo, Repo<Student> studentRepo, Repo<Course> courseRepo) {
         this.enrollmentRepo = enrollmentRepo;
         this.studentRepo = studentRepo;
         this.courseRepo = courseRepo;
