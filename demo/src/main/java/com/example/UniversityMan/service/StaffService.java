@@ -7,19 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.example.UniversityMan.model.Assistant;
 import com.example.UniversityMan.model.Staff;
+import com.example.UniversityMan.model.Department;
 import com.example.UniversityMan.model.Teacher;
 import com.example.UniversityMan.model.TeachingAssignment;
-import com.example.UniversityMan.repository.DepartmentRepository;
-import com.example.UniversityMan.repository.StaffRepository;
-import com.example.UniversityMan.repository.TeachingAssignmentRepository;
+
+import com.example.UniversityMan.repository.Repo;
+
 
 @Service
 public class StaffService {
-    private final StaffRepository staffRepo;
-    private final DepartmentRepository depRepo;
-    private final TeachingAssignmentRepository taRepo;
+    private final Repo<Staff> staffRepo;
+    private final Repo<Department>  depRepo;
+    private final Repo<TeachingAssignment> taRepo;
 
-    public StaffService(StaffRepository staffRepo, DepartmentRepository depRepo, TeachingAssignmentRepository taRepo){
+    public StaffService(Repo<Staff> staffRepo, Repo<Department> depRepo, Repo<TeachingAssignment> taRepo){
         this.staffRepo = staffRepo;
         this.depRepo = depRepo;
         this.taRepo = taRepo;

@@ -4,20 +4,20 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-
+import com.example.UniversityMan.model.Course;
+import com.example.UniversityMan.model.Staff;
 import com.example.UniversityMan.model.TeachingAssignment;
-import com.example.UniversityMan.repository.CourseRepository;
-import com.example.UniversityMan.repository.StaffRepository;
-import com.example.UniversityMan.repository.TeachingAssignmentRepository;
+
+import com.example.UniversityMan.repository.Repo;
 
 @Service
 public class TeachingAssignmentService {
     // injecting repos to avoid circular dependencies
-    private final CourseRepository courseRepo;
-    private final TeachingAssignmentRepository taRepo;
-    private final StaffRepository staffRepo;
+    private final Repo<Course> courseRepo;
+    private final Repo<TeachingAssignment> taRepo;
+    private final Repo<Staff> staffRepo;
 
-    TeachingAssignmentService(CourseRepository courseRepo, TeachingAssignmentRepository taRepo, StaffRepository staffRepo) {
+    TeachingAssignmentService(Repo<Course> courseRepo, Repo<TeachingAssignment> taRepo, Repo<Staff> staffRepo) {
         this.courseRepo = courseRepo;
         this.taRepo = taRepo;
         this.staffRepo = staffRepo;
