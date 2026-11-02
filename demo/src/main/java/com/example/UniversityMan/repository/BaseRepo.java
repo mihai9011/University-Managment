@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.example.UniversityMan.model.BaseEntity;
 
-public abstract class BaseRepo<T extends BaseEntity> implements Repo<T>{
+
+public abstract class BaseRepo<T extends BaseEntity> implements Repo<T> {
 
     protected final List<T> list = new ArrayList<>();
 

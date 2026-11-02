@@ -1,15 +1,15 @@
 package com.example.UniversityMan.service;
 
 import org.springframework.stereotype.Service;
-import com.example.UniversityMan.repository.RoomRepository;
+import com.example.UniversityMan.repository.Repo;
 import java.util.List;
 import com.example.UniversityMan.model.Room;
 
 @Service
 public class RoomService {
-    private final RoomRepository roomRepo;
+    private final Repo<Room> roomRepo;
 
-    RoomService(RoomRepository roomRepo){
+    RoomService(Repo<Room> roomRepo){
         this.roomRepo = roomRepo;
     }
 

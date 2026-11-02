@@ -2,18 +2,18 @@ package com.example.UniversityMan.service;
 
 import org.springframework.stereotype.Service;
 import com.example.UniversityMan.model.Course;
-import com.example.UniversityMan.repository.CourseRepository;
-import com.example.UniversityMan.repository.DepartmentRepository;
-import com.example.UniversityMan.repository.RoomRepository;
+import com.example.UniversityMan.repository.Repo;
+import com.example.UniversityMan.model.Department;
+import com.example.UniversityMan.model.Room;
 import java.util.List;
 
 @Service
 public class CourseService {
-    private final CourseRepository courseRepo;
-    private final DepartmentRepository departmentRepo;
-    private final RoomRepository roomRepo;
+    private final Repo<Course> courseRepo;
+    private final Repo<Department> departmentRepo;
+    private final Repo<Room> roomRepo;
 
-    CourseService(CourseRepository courseRepo, DepartmentRepository departmentRepo, RoomRepository roomRepo){
+    CourseService(Repo<Course> courseRepo, Repo<Department> departmentRepo, Repo<Room> roomRepo){
         this.courseRepo = courseRepo;
         this.departmentRepo = departmentRepo;
         this.roomRepo = roomRepo;
