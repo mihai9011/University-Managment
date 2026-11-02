@@ -26,22 +26,22 @@ public class TeachingAssignmentController{
     }
 
     @GetMapping
-    public List<TeachingAssignment> getAllEnrollments(){
+    public List<TeachingAssignment> getAllTeachingAssignments(){
         return taServ.getAll();
     }
 
     @PostMapping 
-    public ResponseEntity<String> createOrUpdateEnrollments(@RequestBody TeachingAssignment ta){
+    public ResponseEntity<String> createOrUpdateTeachingAssignments(@RequestBody TeachingAssignment ta){
         try{
             taServ.save(ta);
-            return ResponseEntity.ok("Assignment added");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Assignment added");
         }catch(IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getEnrollmentById(@PathVariable String id){
+    public ResponseEntity<?> getTeachingAssignmentById(@PathVariable String id){
         try{
             TeachingAssignment ta = taServ.getById(id);
             return ResponseEntity.ok(ta);

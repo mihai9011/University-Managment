@@ -33,7 +33,7 @@ public class EnrollmentController {
     public ResponseEntity<String> createOrUpdateEnrollments(@RequestBody Enrollment enrollment){
         try{
             enrolServ.save(enrollment);
-            return ResponseEntity.ok("Enrollment added");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Enrollment added");
         }catch(IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
