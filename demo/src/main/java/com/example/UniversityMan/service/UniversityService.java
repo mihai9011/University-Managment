@@ -1,16 +1,16 @@
 package com.example.UniversityMan.service;
 
 import org.springframework.stereotype.Service;
-import com.example.UniversityMan.repository.UniversityRepository;
+import com.example.UniversityMan.repository.Repo;
 import java.util.List;
 import com.example.UniversityMan.model.University;
 
 
 @Service
 public class UniversityService {
-    private final UniversityRepository universityRepo;
+    private final Repo<University> universityRepo;
 
-    UniversityService(UniversityRepository universityRepo){
+    UniversityService(Repo<University> universityRepo){
         this.universityRepo = universityRepo;
     }
 
