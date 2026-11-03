@@ -44,7 +44,7 @@ public class StudentService implements ValidatableService{
         }
 
         if (!isValidEmail(student.getEmail())) {
-            throw new IllegalArgumentException("Formatul email-ului este invalid!");
+            throw new IllegalArgumentException("Invalid E-mail format!");
         }
 
         if(isEmailTaken(student.getEmail(), student.getId())){
