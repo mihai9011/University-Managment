@@ -10,7 +10,7 @@ import com.example.UniversityMan.model.Student;
 import com.example.UniversityMan.repository.Repo;
 
 @Service
-public class StudentService {
+public class StudentService implements ValidatableService{
     private final Repo<Student> studentRepo;
 
     StudentService(Repo<Student> studentRepo){
@@ -41,6 +41,10 @@ public class StudentService {
 
         if(student.getBirthDate() == null || student.getBirthDate().isAfter(LocalDate.now())){
             throw new IllegalArgumentException("Birth date must be in the past!");
+        }
+
+        if (!isValidEmail(student.getEmail())) {
+            throw new IllegalArgumentException("Formatul email-ului este invalid!");
         }
 
         if(isEmailTaken(student.getEmail(), student.getId())){
