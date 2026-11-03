@@ -15,7 +15,7 @@ import com.example.UniversityMan.repository.Repo;
 
 
 @Service
-public class StaffService {
+public class StaffService implements ValidatableService{
     private final Repo<Staff> staffRepo;
     private final Repo<Department>  depRepo;
     private final Repo<TeachingAssignment> taRepo;
@@ -84,7 +84,7 @@ public class StaffService {
 
         Teacher teacher = (Teacher) staff;
 
-        if(teacher.getEmail() == null){
+        if(teacher.getEmail() == null  || teacher.getEmail().isBlank()){
             throw new IllegalArgumentException("Staff member must have an e-mail!");
         }
 
@@ -102,6 +102,10 @@ public class StaffService {
 
         if(teacher.getName() == null){
             throw new IllegalArgumentException("Teacher must have a name!");
+        }
+        
+        if (!isValidEmail(teacher.getEmail())) {
+            throw new IllegalArgumentException("Invalid E-mail format!");
         }
 
         if(isEmailTaken(teacher.getEmail() ,teacher.getId())){
