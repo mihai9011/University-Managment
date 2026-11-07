@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Staff</title>
+</head>
+<body>
+    <h1>Add a New Staff Member</h1>
+    <form th:action="@{/staff}" th:object="${staffDto}" method="post">
+        
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required />
+        <br><br>
+
+        <!-- Dropdown to choose staff type -->
+        <label>Role:</label>
+        <select th:field="*{type}" required>
+            <option value="teacher">Teacher</option>
+            <option value="assistant">Assistant</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <br>
+    <a th:href="@{/staff}">Back to list</a>
+</body>
+</html>
