@@ -1,61 +1,42 @@
 package com.example.universitymanagement.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import com.example.universitymanagement.model.Student;
 import com.example.universitymanagement.service.StudentService;
 
-@RestController
-@RequestMapping("/students")
+@Controller
+@RequestMapping("/student")
 public class StudentController {
 
-    private final StudentService studServ;
+    private final StudentService studentService;
 
-    StudentController( StudentService studServ){
-        this.studServ = studServ;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
-    @GetMapping 
-    public List<Student> getAllStudents(){
-        return studServ.getAll();
+    @GetMapping
+    public String getAll(Model model) {
+        model.addAttribute("students", studentService.getAll());
+        return "student/index";
     }
 
     @GetMapping("/new")
-    public ResponseEntity<?> getStudentById(@PathVariable String id) {
-        try{
-            Student student = studServ.getById(id);
-            return ResponseEntity.ok(student);
-        }catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public String showCreateForm(Model model) {
+        model.addAttribute("student", new Student()); 
+        return "student/form";
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdateStudent(@RequestBody Student student){
-        try{
-            studServ.save(student);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Student saved successfully!");
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }   
+    public String save(@ModelAttribute Student student) {
+        studentService.save(student);
+        return "redirect:/student"; 
+    }
 
     @PostMapping("/{id}/delete")
-    public ResponseEntity<String> delete(@PathVariable String id){
-        try{
-            studServ.delete(id);
-            return ResponseEntity.ok("Student with " + id + " deleted successfully!");
-        }catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public String delete(@PathVariable String id) {
+        studentService.delete(id);
+        return "redirect:/student"; 
     }
 }

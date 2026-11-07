@@ -1,61 +1,60 @@
 package com.example.universitymanagement.controller;
 
-import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.example.universitymanagement.model.StaffDTO;
+import com.example.universitymanagement.model.Assistant;
 import com.example.universitymanagement.model.Staff;
+import com.example.universitymanagement.model.Teacher;
 import com.example.universitymanagement.service.StaffService;
 
-@RestController
+@Controller
 @RequestMapping("/staff")
 public class StaffController {
-    private final StaffService staffServ;
 
-    StaffController(StaffService staffServ){
-        this.staffServ = staffServ;
+    private final StaffService staffService;
+
+    public StaffController(StaffService staffService) {
+        this.staffService = staffService;
     }
 
-    @GetMapping 
-    public List<Staff> getAllStaff(){
-        return staffServ.getAll();
+    @GetMapping
+    public String getAll(Model model) {
+        model.addAttribute("staffList", staffService.getAll());
+        return "staff/index";
     }
-
-    @PostMapping 
-    public ResponseEntity<String> createOrUpdateStaff(@RequestBody Staff staff){
-        try{
-            staffServ.save(staff);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Staff member saved successfully!");
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }  
 
     @GetMapping("/new")
-    //formular
-    public ResponseEntity<?>getStaffById(@PathVariable String id){
-        try{
-            Staff staff =  staffServ.getById(id);
-            return ResponseEntity.ok(staff);
-        }catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public String showCreateForm(Model model) {
+        model.addAttribute("staffDto", new StaffDTO()); 
+        return "staff/form";
+    }
+
+    @PostMapping
+    public String save(@ModelAttribute StaffDTO staffDto) {
+        Staff staff;
+        
+        //instantiating with type attribute
+        if ("assistant".equalsIgnoreCase(staffDto.getType())) {
+            staff = new Assistant();
+        } else {
+            staff = new Teacher();
         }
+        
+        //transfering data
+        staff.setId(staffDto.getId());
+        staff.setName(staffDto.getName());
+        
+        staffService.save(staff);
+        
+        return "redirect:/staff"; 
     }
 
     @PostMapping("/{id}/delete")
-    public ResponseEntity<String> delete(@PathVariable String id){
-        try{
-            staffServ.delete(id);
-            return ResponseEntity.ok("Staff member with " + id + " deleted successfully!");
-        }catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public String delete(@PathVariable String id) {
+        staffService.delete(id);
+        return "redirect:/staff"; 
     }
 }
