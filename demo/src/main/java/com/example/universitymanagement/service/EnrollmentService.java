@@ -1,5 +1,6 @@
 package com.example.universitymanagement.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -46,6 +47,16 @@ public class EnrollmentService {
         }
 
         enrollmentRepo.save(enrol);
+
+        Student student = studentRepo.findById(enrol.getStudentId());
+        if(student != null){
+            student.getEnrollments().add(enrol);
+        }
+
+        Course course = courseRepo.findById(enrol.getCourseId());
+        if(course != null){
+            course.getEnrollments().add(enrol);
+        }
     }
 
     public List<Enrollment> getAll() {
@@ -63,10 +74,36 @@ public class EnrollmentService {
     }
     
     public void delete(String id) {
-        if (!enrollmentRepo.delete(id)) {
+        Enrollment enrol = enrollmentRepo.findById(id);
+
+        if (enrol == null) {
             throw new IllegalArgumentException("Enrollment with id " + id + " not found");
         }
 
+        enrollmentRepo.delete(id);
+
+        Student student = studentRepo.findById(enrol.getStudentId());
+        if(student != null){
+            List<Enrollment> newEnrollments = new ArrayList<>();
+            for(Enrollment e : student.getEnrollments()){
+                if(!e.getId().equals(id)){
+                    newEnrollments.add(e);
+                }
+            }
+            student.setEnrollments(newEnrollments);
+        }
+
+        Course course = courseRepo.findById(enrol.getCourseId());
+        if(course != null){
+            List<Enrollment> newEnrollments = new ArrayList<>();
+            for(Enrollment e : course.getEnrollments()){
+                if(!e.getId().equals(id)){
+                    newEnrollments.add(e);
+                }
+            }
+            course.setEnrollments(newEnrollments);
+        }
+    
         System.out.println("Enrollment with id " + id + " deleted.");
     }
 }
