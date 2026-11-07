@@ -7,7 +7,7 @@ import com.example.universitymanagement.model.TeachingAssignment;
 import com.example.universitymanagement.service.TeachingAssignmentService;
 
 @Controller
-@RequestMapping("/teachingassignment")
+@RequestMapping("/teachingassignments")
 public class TeachingAssignmentController {
 
     private final TeachingAssignmentService teachingAssignmentService;
@@ -31,12 +31,12 @@ public class TeachingAssignmentController {
     @PostMapping
     public String save(@ModelAttribute TeachingAssignment teachingAssignment) {
         teachingAssignmentService.save(teachingAssignment);
-        return "redirect:/teachingassignment"; 
+        return "redirect:/teachingassignments"; 
     }
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable String id) {
         teachingAssignmentService.delete(id);
-        return "redirect:/teachingassignment"; 
+        return "redirect:/teachingassignments"; 
     }
 }

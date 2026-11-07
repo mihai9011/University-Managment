@@ -7,7 +7,7 @@
 <body>
     <h1>Add a New Teaching Assignment</h1>
 
-    <form th:action="@{/teachingassignment}" th:object="${teachingAssignment}" method="post">
+    <form th:action="@{/teachingassignments}" th:object="${teachingAssignment}" method="post">
         
         <label>ID:</label>
         <input type="text" th:field="*{id}" required />
@@ -33,6 +33,6 @@
     </form>
 
     <br>
-    <a th:href="@{/teachingassignment}">Back to list</a>
+    <a th:href="@{/teachingassignments}">Back to list</a>
 </body>
 </html>

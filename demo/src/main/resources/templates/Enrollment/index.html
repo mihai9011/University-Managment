@@ -7,7 +7,7 @@
 <body>
     <h1>Enrollments</h1>
     
-    <a th:href="@{/enrollment/new}">Add a new enrollment</a>
+    <a th:href="@{/enrollments/new}">Add a new enrollment</a>
     <br><br>
 
     <table border="1">
@@ -27,7 +27,7 @@
                 <td th:text="${enrol.courseId}">C1</td>
                 <td th:text="${enrol.grade}">NA</td>
                 <td>
-                    <form th:action="@{'/enrollment/' + ${enrol.id} + '/delete'}" method="post">
+                    <form th:action="@{'/enrollments/' + ${enrol.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>
                 </td>

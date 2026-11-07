@@ -44,7 +44,6 @@ public class StaffController {
         }
         
         //transfering data
-        staff.setId(staffDto.getId());
         staff.setName(staffDto.getName());
         
         staffService.save(staff);

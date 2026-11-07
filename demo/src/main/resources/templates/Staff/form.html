@@ -8,10 +8,6 @@
     <h1>Add a New Staff Member</h1>
     <form th:action="@{/staff}" th:object="${staffDto}" method="post">
         
-        <label>ID:</label>
-        <input type="text" th:field="*{id}" required />
-        <br><br>
-
         <label>Name:</label>
         <input type="text" th:field="*{name}" required />
         <br><br>

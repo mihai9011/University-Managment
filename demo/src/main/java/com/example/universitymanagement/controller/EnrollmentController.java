@@ -7,7 +7,7 @@ import com.example.universitymanagement.model.Enrollment;
 import com.example.universitymanagement.service.EnrollmentService;
 
 @Controller
-@RequestMapping("/enrollment")
+@RequestMapping("/enrollments")
 public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
@@ -31,12 +31,12 @@ public class EnrollmentController {
     @PostMapping
     public String save(@ModelAttribute Enrollment enrollment) {
         enrollmentService.save(enrollment);
-        return "redirect:/enrollment"; 
+        return "redirect:/enrollments"; 
     }
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable String id) {
         enrollmentService.delete(id);
-        return "redirect:/enrollment"; 
+        return "redirect:/enrollments"; 
     }
 }

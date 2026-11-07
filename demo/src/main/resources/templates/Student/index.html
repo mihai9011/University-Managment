@@ -7,7 +7,7 @@
 <body>
     <h1>Students</h1>
     
-    <a th:href="@{/student/new}">Add a new student</a>
+    <a th:href="@{/students/new}">Add a new student</a>
     <br><br>
 
     <table border="1">
@@ -27,7 +27,7 @@
                 <td th:text="${student.email}">john@ubb.ro</td>
                 <td th:text="${student.birthDate}">2004-05-15</td>
                 <td>
-                    <form th:action="@{'/student/' + ${student.id} + '/delete'}" method="post">
+                    <form th:action="@{'/students/' + ${student.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>
                 </td>
