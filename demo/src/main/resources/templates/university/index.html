@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Universities List</title>
+</head>
+<body>
+    <h1>Universities</h1>
+
+    <a th:href="@{/universities/new}">Add a new university</a>
+    <br><br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>City</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="university : ${universities}">
+                <td th:text="${university.id}">1</td>
+                <td th:text="${university.name}">Babes-Bolyai</td>
+                <td th:text="${university.city}">Cluj-Napoca</td>
+                <td>
+                    <form th:action="@{'/universities/' + ${university.id} + '/delete'}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
