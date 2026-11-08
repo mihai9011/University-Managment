@@ -3,22 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Staff</title>
+    <script>
+        function toggleFields() {
+            var type = document.getElementById("staffType").value;
+            var teacherFields = document.getElementById("teacherFields");
+            var assistantFields = document.getElementById("assistantFields");
+
+            if (type === "teacher") {
+                teacherFields.style.display = "block";
+                assistantFields.style.display = "none";
+            } else if (type === "assistant") {
+                teacherFields.style.display = "none";
+                assistantFields.style.display = "block";
+            }
+        }
+        window.onload = toggleFields;
+    </script>
 </head>
 <body>
     <h1>Add a New Staff Member</h1>
+
     <form th:action="@{/staff}" th:object="${staffDto}" method="post">
         
         <label>Name:</label>
         <input type="text" th:field="*{name}" required />
         <br><br>
 
-        <!-- Dropdown to choose staff type -->
         <label>Role:</label>
-        <select th:field="*{type}" required>
+        <select id="staffType" th:field="*{type}" onchange="toggleFields()" required>
             <option value="teacher">Teacher</option>
             <option value="assistant">Assistant</option>
         </select>
         <br><br>
+
+        <!-- Fields specific to Teacher -->
+        <div id="teacherFields" style="display:none;">
+            <label>Title:</label>
+            <input type="text" th:field="*{title}" />
+            <br><br>
+
+            <label>Department ID:</label>
+            <input type="text" th:field="*{departmentId}" />
+            <br><br>
+
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" />
+            <br><br>
+
+            <label>Hire Date:</label>
+            <input type="date" th:field="*{hireDate}" />
+            <br><br>
+        </div>
+
+        <!-- Fields specific to Assistant -->
+        <div id="assistantFields" style="display:none;">
+            <label>Assistant Role:</label>
+            <select th:field="*{assistantRole}">
+                <option value="LAB">LAB</option>
+                <option value="TA">TA</option>
+                <option value="GRADER">GRADER</option>
+            </select>
+            <br><br>
+        </div>
 
         <button type="submit">Save</button>
     </form>

@@ -8,10 +8,6 @@
     <h1>Add a New Teaching Assignment</h1>
 
     <form th:action="@{/teachingassignments}" th:object="${teachingAssignment}" method="post">
-        
-        <label>ID:</label>
-        <input type="text" th:field="*{id}" required />
-        <br><br>
 
         <label>Course ID:</label>
         <input type="text" th:field="*{courseId}" required />

@@ -8,10 +8,6 @@
     <h1>Add a New Student</h1>
 
     <form th:action="@{/students}" th:object="${student}" method="post">
-        
-        <label>ID:</label>
-        <input type="text" th:field="*{id}" required />
-        <br><br>
 
         <label>Name:</label>
         <input type="text" th:field="*{name}" required />

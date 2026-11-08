@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.universitymanagement.model.StaffDTO;
 import com.example.universitymanagement.model.Assistant;
-import com.example.universitymanagement.model.Staff;
+import com.example.universitymanagement.model.AssistantRole;
 import com.example.universitymanagement.model.Teacher;
 import com.example.universitymanagement.service.StaffService;
 
@@ -34,19 +34,24 @@ public class StaffController {
 
     @PostMapping
     public String save(@ModelAttribute StaffDTO staffDto) {
-        Staff staff;
-        
-        //instantiating with type attribute
         if ("assistant".equalsIgnoreCase(staffDto.getType())) {
-            staff = new Assistant();
+            Assistant assistant = new Assistant();
+
+            assistant.setName(staffDto.getName());
+            assistant.setRole(AssistantRole.valueOf(staffDto.getAssistantRole())); 
+            
+            staffService.save(assistant);
         } else {
-            staff = new Teacher();
+            Teacher teacher = new Teacher();
+
+            teacher.setName(staffDto.getName());
+            teacher.setTitle(staffDto.getTitle());
+            teacher.setDepartmentId(staffDto.getDepartmentId());
+            teacher.setEmail(staffDto.getEmail());
+            teacher.setHireDate(staffDto.getHireDate());
+            
+            staffService.save(teacher);
         }
-        
-        //transfering data
-        staff.setName(staffDto.getName());
-        
-        staffService.save(staff);
         
         return "redirect:/staff"; 
     }

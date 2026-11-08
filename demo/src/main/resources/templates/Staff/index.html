@@ -19,7 +19,6 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Ensure your controller adds "staffList" to the model -->
             <tr th:each="staff : ${staffList}">
                 <td th:text="${staff.id}">1</td>
                 <td th:text="${staff.name}">Jane Smith</td>
