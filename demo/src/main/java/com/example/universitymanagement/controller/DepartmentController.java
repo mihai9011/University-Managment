@@ -50,7 +50,7 @@ public class DepartmentController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable String id){
         try{
             departmentServ.delete(id);
