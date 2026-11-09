@@ -1,21 +1,17 @@
 package com.example.universitymanagement.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.example.universitymanagement.model.University;
 import com.example.universitymanagement.service.UniversityService;
 
-@RestController
+@Controller
 @RequestMapping("/universities")
 public class UniversityController {
 
@@ -26,37 +22,26 @@ public class UniversityController {
     }
 
     @GetMapping
-    public List<University> getAllUniversities(){
-        return universityServ.getAll();
+    public String getAll(Model model){
+        model.addAttribute("universities", universityServ.getAll());
+        return "university/index";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getUniversityById(@PathVariable String id){
-        try{
-            University university = universityServ.getById(id);
-            return ResponseEntity.ok(university);
-        }catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    @GetMapping("/new")
+    public String showCreateForm(Model model){
+        model.addAttribute("university", new University());
+        return "university/form";
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdateUniversity(@RequestBody University university){
-        try{
-            universityServ.save(university);
-            return ResponseEntity.status(HttpStatus.CREATED).body("University saved successfully!");
-        }catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public String save(@ModelAttribute University university){
+        universityServ.save(university);
+        return "redirect:/universities";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable String id){
-        try{
-            universityServ.delete(id);
-            return ResponseEntity.ok("University with " + id + " deleted successfully!");
-        }catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable String id){
+        universityServ.delete(id);
+        return "redirect:/universities";
     }
 }
