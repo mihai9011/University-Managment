@@ -1,6 +1,5 @@
 package com.example.universitymanagement.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -46,16 +45,28 @@ public class EnrollmentService {
              throw new IllegalArgumentException("Grade for enrollment cannot be null");
         }
 
-        enrollmentRepo.save(enrol);
-
-        Student student = studentRepo.findById(enrol.getStudentId());
-        if(student != null){
-            student.getEnrollments().add(enrol);
+        for (Enrollment other : enrollmentRepo.findAll()) {
+            if (!other.getId().equals(enrol.getId())
+                    && other.getStudentId().equals(enrol.getStudentId())
+                    && other.getCourseId().equals(enrol.getCourseId())) {
+                throw new IllegalArgumentException("Student is already enrolled in this course");
+            }
         }
 
-        Course course = courseRepo.findById(enrol.getCourseId());
-        if(course != null){
-            course.getEnrollments().add(enrol);
+        enrollmentRepo.save(enrol);
+
+        // unlink first, so a re-save neither duplicates the entry nor leaves it on the old student/course
+        unlink(enrol.getId());
+        studentRepo.findById(enrol.getStudentId()).getEnrollments().add(enrol);
+        courseRepo.findById(enrol.getCourseId()).getEnrollments().add(enrol);
+    }
+
+    private void unlink(String id) {
+        for (Student student : studentRepo.findAll()) {
+            student.getEnrollments().removeIf(e -> e.getId().equals(id));
+        }
+        for (Course course : courseRepo.findAll()) {
+            course.getEnrollments().removeIf(e -> e.getId().equals(id));
         }
     }
 
@@ -74,36 +85,12 @@ public class EnrollmentService {
     }
     
     public void delete(String id) {
-        Enrollment enrol = enrollmentRepo.findById(id);
-
-        if (enrol == null) {
+        if (!enrollmentRepo.delete(id)) {
             throw new IllegalArgumentException("Enrollment with id " + id + " not found");
         }
 
-        enrollmentRepo.delete(id);
+        unlink(id);
 
-        Student student = studentRepo.findById(enrol.getStudentId());
-        if(student != null){
-            List<Enrollment> newEnrollments = new ArrayList<>();
-            for(Enrollment e : student.getEnrollments()){
-                if(!e.getId().equals(id)){
-                    newEnrollments.add(e);
-                }
-            }
-            student.setEnrollments(newEnrollments);
-        }
-
-        Course course = courseRepo.findById(enrol.getCourseId());
-        if(course != null){
-            List<Enrollment> newEnrollments = new ArrayList<>();
-            for(Enrollment e : course.getEnrollments()){
-                if(!e.getId().equals(id)){
-                    newEnrollments.add(e);
-                }
-            }
-            course.setEnrollments(newEnrollments);
-        }
-    
         System.out.println("Enrollment with id " + id + " deleted.");
     }
 }
