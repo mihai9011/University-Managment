@@ -14,6 +14,8 @@ cd demo
 then open `http://localhost:8080/hello`. it answers `Die Anwendung funktioniert!`.
 the web interface starts at e.g. `http://localhost:8080/universities`.
 
+run the tests with `./mvnw test`.
+
 ## structure
 
 ```
@@ -52,10 +54,11 @@ layers are kept strictly separate: controller -> service -> repository -> model.
   `IllegalArgumentException` for not-found cases. student and staff e-mails must be
   unique and the student's birth date must be in the past.
 - **inheritance for staff.** `Staff` is abstract, with `Teacher` and `Assistant` as
-  subclasses (liskov: both can be used wherever a `Staff` is expected). `@JsonTypeInfo`
-  on `Staff` lets json choose the subclass through a `type` field.
+  subclasses (liskov: both can be used wherever a `Staff` is expected). the web form
+  picks the subclass through `StaffDTO`.
 - **relations by id.** entities reference each other by id (`departmentId`, `roomId`,
-  `studentId`, ...) like in the uml, which keeps the in-memory data simple.
+  `studentId`, ...) like in the uml, which keeps the in-memory data simple. the uml's
+  lists on the parent classes are filled from these ids (see below).
 - **dates** use `LocalDate`, not `String`. enums (`Grade`, `ManagingType`,
   `AssistantRole`) are used instead of free-text status fields.
 
@@ -86,6 +89,10 @@ controllers and repositories know nothing about it.
   real data and one click shouldn't remove them, so they keep the old id.
 - **`University.departments` and `University.rooms` are not synced.** the uml gives
   `Department` and `Room` no `universityId`, so nothing says where they belong.
+
+- **why lists and not queries.** we could store only the ids and offer queries like
+  `findByStudentId(...)`, which can't go out of sync. we kept the lists because the uml
+  specifies them.
 
 `ListSyncTest` covers these rules.
 
