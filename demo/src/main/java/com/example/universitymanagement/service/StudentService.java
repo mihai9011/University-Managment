@@ -1,19 +1,23 @@
 package com.example.universitymanagement.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.universitymanagement.model.Enrollment;
 import com.example.universitymanagement.model.Student;
 import com.example.universitymanagement.repository.Repo;
 
 @Service
 public class StudentService implements ValidatableService{
     private final Repo<Student> studentRepo;
+    private final EnrollmentService enrollmentService;
 
-    StudentService(Repo<Student> studentRepo){
+    StudentService(Repo<Student> studentRepo, EnrollmentService enrollmentService){
         this.studentRepo = studentRepo;
+        this.enrollmentService = enrollmentService;
     }
 
     public boolean isEmailTaken(String email, String ownId){
@@ -48,7 +52,13 @@ public class StudentService implements ValidatableService{
 
         if(isEmailTaken(student.getEmail(), student.getId())){
             throw new IllegalArgumentException("Student e-mail already in use!");
-        }    
+        }
+
+        // a re-save with a new object must not lose the existing enrollments
+        Student existing = studentRepo.findById(student.getId());
+        if(existing != null){
+            student.setEnrollments(existing.getEnrollments());
+        }
 
         studentRepo.save(student);
     }
@@ -68,10 +78,12 @@ public class StudentService implements ValidatableService{
     }
 
     public void delete(String id){
-
-        if(!studentRepo.delete(id)){
-            throw new IllegalArgumentException("Student with id " + id + " not found");
+        // an enrollment makes no sense without its student. iterate over a copy, delete changes the list
+        for(Enrollment enrollment : new ArrayList<>(getById(id).getEnrollments())){
+            enrollmentService.delete(enrollment.getId());
         }
+
+        studentRepo.delete(id);
 
         System.out.println("Student with id " + id + " deleted.");
     }

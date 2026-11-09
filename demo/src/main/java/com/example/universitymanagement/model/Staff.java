@@ -1,17 +1,8 @@
 package com.example.universitymanagement.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
-// "type" im JSON entscheidet, ob ein Teacher oder Assistant erzeugt wird
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-		@JsonSubTypes.Type(value = Teacher.class, name = "teacher"),
-		@JsonSubTypes.Type(value = Assistant.class, name = "assistant")
-})
 public abstract class Staff extends BaseEntity {
 	private String name;
 	private List<TeachingAssignment> assignments = new ArrayList<>();

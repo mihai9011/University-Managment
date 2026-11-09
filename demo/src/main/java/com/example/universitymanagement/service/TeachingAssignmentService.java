@@ -47,7 +47,31 @@ public class TeachingAssignmentService {
             throw new IllegalArgumentException("Managing type left empty!");
         }
 
+        // the same person can teach both the lab and the seminar of a course, so managing is part of the check
+        for (TeachingAssignment other : taRepo.findAll()) {
+            if (!other.getId().equals(ta.getId())
+                    && other.getCourseId().equals(ta.getCourseId())
+                    && other.getStaffId().equals(ta.getStaffId())
+                    && other.getManaging() == ta.getManaging()) {
+                throw new IllegalArgumentException("This teaching assignment already exists");
+            }
+        }
+
         taRepo.save(ta);
+
+        // unlink first, so a re-save neither duplicates the entry nor leaves it on the old course/staff
+        unlink(ta.getId());
+        courseRepo.findById(ta.getCourseId()).getAssignments().add(ta);
+        staffRepo.findById(ta.getStaffId()).getAssignments().add(ta);
+    }
+
+    private void unlink(String id) {
+        for (Course course : courseRepo.findAll()) {
+            course.getAssignments().removeIf(a -> a.getId().equals(id));
+        }
+        for (Staff staff : staffRepo.findAll()) {
+            staff.getAssignments().removeIf(a -> a.getId().equals(id));
+        }
     }
 
     public List<TeachingAssignment> getAll() {
@@ -68,6 +92,8 @@ public class TeachingAssignmentService {
         if (!taRepo.delete(id)) {
             throw new IllegalArgumentException("TeachingAssignment with id " + id + " not found");
         }
+
+        unlink(id);
 
         System.out.println("TeachingAssignment with id " + id + " deleted.");
     }

@@ -24,6 +24,12 @@ public class RoomService {
             throw new IllegalArgumentException("Room capacity must be greater than 0");
         }
 
+        // a re-save with a new object must not lose the existing courses
+        Room existing = roomRepo.findById(room.getId());
+        if(existing != null){
+            room.setCourses(existing.getCourses());
+        }
+
         return roomRepo.save(room);
     }
 

@@ -1,5 +1,6 @@
 package com.example.universitymanagement.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,11 +19,28 @@ public class StaffService implements ValidatableService{
     private final Repo<Staff> staffRepo;
     private final Repo<Department>  depRepo;
     private final Repo<TeachingAssignment> taRepo;
+    private final TeachingAssignmentService assignmentService;
 
-    public StaffService(Repo<Staff> staffRepo, Repo<Department> depRepo, Repo<TeachingAssignment> taRepo){
+    public StaffService(Repo<Staff> staffRepo, Repo<Department> depRepo, Repo<TeachingAssignment> taRepo,
+                        TeachingAssignmentService assignmentService){
         this.staffRepo = staffRepo;
         this.depRepo = depRepo;
         this.taRepo = taRepo;
+        this.assignmentService = assignmentService;
+    }
+
+    private void unlinkFromDepartments(String id){
+        for(Department department : depRepo.findAll()){
+            department.getTeachers().removeIf(t -> t.getId().equals(id));
+        }
+    }
+
+    // a re-save with a new object must not lose the existing assignments
+    private void keepAssignments(Staff staff){
+        Staff existing = staffRepo.findById(staff.getId());
+        if(existing != null){
+            staff.setAssignments(existing.getAssignments());
+        }
     }
 
     public boolean isEmailTaken(String email, String ownId){
@@ -77,7 +95,9 @@ public class StaffService implements ValidatableService{
                 throw new IllegalArgumentException("Assistant must have a role!");
             }
 
+            keepAssignments(assistant);
             staffRepo.save(assistant);
+            unlinkFromDepartments(assistant.getId());
             return;
         }
 
@@ -115,7 +135,12 @@ public class StaffService implements ValidatableService{
             throw new IllegalArgumentException("Department with id " + teacher.getDepartmentId() + " doesn`t exist!");
         }
         
+        keepAssignments(teacher);
         staffRepo.save(teacher);
+
+        // unlink first, so a re-save neither duplicates the entry nor leaves it on the old department
+        unlinkFromDepartments(teacher.getId());
+        depRepo.findById(teacher.getDepartmentId()).getTeachers().add(teacher);
     }
 
     public List<Staff> getAll(){
@@ -133,9 +158,13 @@ public class StaffService implements ValidatableService{
     }
 
     public void delete(String id){
-        if(!staffRepo.delete(id)){
-            throw new IllegalArgumentException("Staff with id " + id + " not found");
+        // an assignment makes no sense without its staff member. iterate over a copy, delete changes the list
+        for(TeachingAssignment assignment : new ArrayList<>(getById(id).getAssignments())){
+            assignmentService.delete(assignment.getId());
         }
+
+        staffRepo.delete(id);
+        unlinkFromDepartments(id);
 
         System.out.println("Staff with id " + id + " deleted.");
     }

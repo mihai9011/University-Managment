@@ -24,6 +24,13 @@ public class DepartmentService {
             throw new IllegalArgumentException("Department name cannot be null or blank");
         }
 
+        // a re-save with a new object must not lose the existing courses and teachers
+        Department existing = departmentRepo.findById(department.getId());
+        if(existing != null){
+            department.setCourses(existing.getCourses());
+            department.setTeachers(existing.getTeachers());
+        }
+
         return departmentRepo.save(department);
     }
 
