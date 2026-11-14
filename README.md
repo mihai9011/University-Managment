@@ -73,6 +73,8 @@ controllers and repositories know nothing about it.
 |---|---|
 | `Enrollment` | `Student.enrollments`, `Course.enrollments` |
 | `TeachingAssignment` | `Staff.assignments`, `Course.assignments` |
+| `Department` | `University.departments` |
+| `Room` | `University.rooms` |
 | `Course` | `Department.courses`, `Room.courses` |
 | `Teacher` | `Department.teachers` |
 
@@ -85,10 +87,12 @@ controllers and repositories know nothing about it.
 - **deleting cascades to link objects only.** deleting a student deletes its enrollments,
   deleting a course deletes its enrollments and assignments, deleting staff deletes its
   assignments. they mean nothing without both sides.
-- **deleting a department or room does not delete its courses or teachers.** they are
-  real data and one click shouldn't remove them, so they keep the old id.
-- **`University.departments` and `University.rooms` are not synced.** the uml gives
-  `Department` and `Room` no `universityId`, so nothing says where they belong.
+- **a parent with real data can't be deleted.** a university with departments or rooms,
+  a department with courses or teachers, and a room with courses are rejected. one click
+  shouldn't remove real data, and nothing may keep an id that no longer exists. delete
+  bottom-up instead (courses and teachers, then departments and rooms, then the university).
+- **`Department` and `Room` have a `universityId`.** the uml doesn't have it, but without it
+  nothing says where they belong and `University.departments`/`rooms` can't be filled.
 
 - **why lists and not queries.** we could store only the ids and offer queries like
   `findByStudentId(...)`, which can't go out of sync. we kept the lists because the uml
@@ -127,6 +131,7 @@ entities and routes: `/universities`, `/departments`, `/rooms`, `/courses`,
 | class | new property |
 |---|---|
 | `Course` | `semester` |
+| `Department`, `Room` | `universityId` (needed for the list sync) |
 | `Student` | `email`, `birthDate` |
 | `Teacher` | `email`, `hireDate` |
 
@@ -136,5 +141,3 @@ entities and routes: `/universities`, `/departments`, `/rooms`, `/courses`,
 - invalid input (unknown id, duplicate or malformed e-mail, ...) is rejected by the
   services with an `IllegalArgumentException`, which shows as a plain 500 error page.
   friendly error messages are not part of projekt 2.
-- deleting a department or room leaves its courses and teachers with an id that no
-  longer exists.

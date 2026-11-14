@@ -15,6 +15,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>University ID</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
             <tr th:each="department : ${departments}">
                 <td th:text="${department.id}">1</td>
                 <td th:text="${department.name}">Computer Science</td>
+                <td th:text="${department.universityId}">1</td>
                 <td>
                     <form th:action="@{'/departments/' + ${department.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>

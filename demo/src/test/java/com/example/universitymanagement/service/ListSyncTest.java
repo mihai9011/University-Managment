@@ -24,11 +24,13 @@ import com.example.universitymanagement.model.Room;
 import com.example.universitymanagement.model.Student;
 import com.example.universitymanagement.model.Teacher;
 import com.example.universitymanagement.model.TeachingAssignment;
+import com.example.universitymanagement.model.University;
 
 // the spring context (and so the repositories) is shared between tests, every test uses its own new objects
 @SpringBootTest
 class ListSyncTest {
 
+    @Autowired private UniversityService universities;
     @Autowired private DepartmentService departments;
     @Autowired private RoomService rooms;
     @Autowired private CourseService courses;
@@ -37,6 +39,7 @@ class ListSyncTest {
     @Autowired private EnrollmentService enrollments;
     @Autowired private TeachingAssignmentService assignments;
 
+    private University university;
     private Department department;
     private Room room;
     private Course course;
@@ -45,6 +48,7 @@ class ListSyncTest {
 
     @BeforeEach
     void createData() {
+        university = universities.save(new University("University", "City"));
         department = newDepartment();
         room = newRoom();
         course = newCourse(department, room);
@@ -217,13 +221,13 @@ class ListSyncTest {
         assertEquals(1, newCourseObject.getAssignments().size());
         assertSame(newCourseObject, department.getCourses().get(0));
 
-        Department newDepartmentObject = new Department("Renamed");
+        Department newDepartmentObject = new Department("Renamed", university.getId());
         newDepartmentObject.setId(department.getId());
         departments.save(newDepartmentObject);
         assertEquals(1, newDepartmentObject.getCourses().size());
         assertEquals(1, newDepartmentObject.getTeachers().size());
 
-        Room newRoomObject = new Room(10, "Renamed");
+        Room newRoomObject = new Room(10, "Renamed", university.getId());
         newRoomObject.setId(room.getId());
         rooms.save(newRoomObject);
         assertEquals(1, newRoomObject.getCourses().size());
@@ -234,12 +238,68 @@ class ListSyncTest {
         assertEquals(1, newTeacherObject.getAssignments().size());
     }
 
+    @Test
+    void departmentAndRoomAreLinkedToUniversityAndCanMove() {
+        assertTrue(university.getDepartments().contains(department));
+        assertTrue(university.getRooms().contains(room));
+
+        University other = universities.save(new University("Other", "City"));
+        department.setUniversityId(other.getId());
+        departments.save(department);
+        room.setUniversityId(other.getId());
+        rooms.save(room);
+
+        assertTrue(university.getDepartments().isEmpty());
+        assertTrue(university.getRooms().isEmpty());
+        assertTrue(other.getDepartments().contains(department));
+        assertTrue(other.getRooms().contains(room));
+    }
+
+    @Test
+    void savingADepartmentOrRoomWithAnUnknownUniversityIsRejected() {
+        assertThrows(IllegalArgumentException.class, () -> departments.save(new Department("D", "missing")));
+        assertThrows(IllegalArgumentException.class, () -> rooms.save(new Room(10, "R", "missing")));
+    }
+
+    @Test
+    void parentsWithChildrenCannotBeDeleted() {
+        assertThrows(IllegalArgumentException.class, () -> universities.delete(university.getId()));
+        assertThrows(IllegalArgumentException.class, () -> departments.delete(department.getId()));
+        assertThrows(IllegalArgumentException.class, () -> rooms.delete(room.getId()));
+        assertTrue(universities.getAll().contains(university));
+        assertTrue(departments.getAll().contains(department));
+        assertTrue(rooms.getAll().contains(room));
+    }
+
+    @Test
+    void emptyParentsCanBeDeletedBottomUp() {
+        courses.delete(course.getId());
+        staff.delete(teacher.getId());
+        departments.delete(department.getId());
+        rooms.delete(room.getId());
+
+        assertTrue(university.getDepartments().isEmpty());
+        assertTrue(university.getRooms().isEmpty());
+        universities.delete(university.getId());
+        assertFalse(universities.getAll().contains(university));
+    }
+
+    @Test
+    void savingAUniversityAgainWithANewObjectKeepsItsLists() {
+        University newUniversityObject = new University("Renamed", "City");
+        newUniversityObject.setId(university.getId());
+        universities.save(newUniversityObject);
+
+        assertEquals(1, newUniversityObject.getDepartments().size());
+        assertEquals(1, newUniversityObject.getRooms().size());
+    }
+
     private Department newDepartment() {
-        return departments.save(new Department("Department"));
+        return departments.save(new Department("Department", university.getId()));
     }
 
     private Room newRoom() {
-        return rooms.save(new Room(30, "101"));
+        return rooms.save(new Room(30, "101", university.getId()));
     }
 
     private Course newCourse(Department department, Room room) {
