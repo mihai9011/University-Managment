@@ -6,6 +6,8 @@ import com.example.universitymanagement.model.Room;
 import com.example.universitymanagement.model.University;
 import com.example.universitymanagement.repository.Repo;
 
+import jakarta.annotation.PostConstruct;
+
 import java.util.List;
 
 @Service
@@ -80,5 +82,12 @@ public class RoomService {
 
         roomRepo.delete(id);
         unlink(id);
+    }
+
+    @PostConstruct
+    void linkLoadedRooms(){
+        for(Room room : roomRepo.findAll()){
+            universityRepo.findById(room.getUniversityId()).getRooms().add(room);
+        }
     }
 }

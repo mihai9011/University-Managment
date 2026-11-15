@@ -7,7 +7,9 @@ import com.example.universitymanagement.model.Department;
 import com.example.universitymanagement.model.Enrollment;
 import com.example.universitymanagement.model.Room;
 import com.example.universitymanagement.model.TeachingAssignment;
-import com.example.universitymanagement.repository.Repo;
+import com.example.universitymanagement.repository.Repo;    
+
+import jakarta.annotation.PostConstruct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,5 +101,13 @@ public class CourseService {
 
         courseRepo.delete(id);
         unlink(id);
+    }
+
+    @PostConstruct 
+    public void linkLoadedCourses(){
+        for(Course course : courseRepo.findAll()){
+        departmentRepo.findById(course.getDepartmentId()).getCourses().add(course);
+        roomRepo.findById(course.getRoomId()).getCourses().add(course);
+        }
     }
 }

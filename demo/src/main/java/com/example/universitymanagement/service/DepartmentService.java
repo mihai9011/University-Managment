@@ -6,6 +6,8 @@ import com.example.universitymanagement.model.Department;
 import com.example.universitymanagement.model.University;
 import com.example.universitymanagement.repository.Repo;
 
+import jakarta.annotation.PostConstruct;
+
 import java.util.List;
 
 @Service
@@ -81,5 +83,12 @@ public class DepartmentService {
 
         departmentRepo.delete(id);
         unlink(id);
+    }
+
+    @PostConstruct
+    void linkLoadedDepartments(){
+        for(Department department : departmentRepo.findAll()){
+            universityRepo.findById(department.getUniversityId()).getDepartments().add(department);
+        }
     }
 }
