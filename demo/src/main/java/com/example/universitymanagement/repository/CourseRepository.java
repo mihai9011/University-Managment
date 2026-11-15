@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import com.example.universitymanagement.model.Course;
 
 @Repository
-public class CourseRepository extends BaseRepo<Course> {
-    CourseRepository(){};
+public class CourseRepository extends InFileRepository<Course> {
+    CourseRepository(){
+        super("course.json", Course.class);
+    }
 }
