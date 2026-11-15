@@ -1,7 +1,10 @@
 package com.example.universitymanagement.model;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Room extends BaseEntity {
 	private double capacity;
@@ -23,6 +26,7 @@ public class Room extends BaseEntity {
 	public void setNumber(String number) { this.number = number; }
 	public String getUniversityId() { return universityId; }
 	public void setUniversityId(String universityId) { this.universityId = universityId; }
+	@JsonIgnore
 	public List<Course> getCourses() { return courses; }
 	public void setCourses(List<Course> courses) { this.courses = courses; }
 }

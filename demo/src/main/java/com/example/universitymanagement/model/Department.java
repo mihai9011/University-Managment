@@ -1,5 +1,7 @@
 package com.example.universitymanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +22,10 @@ public class Department extends BaseEntity {
 	public void setName(String name) { this.name = name; }
 	public String getUniversityId() { return universityId; }
 	public void setUniversityId(String universityId) { this.universityId = universityId; }
+	@JsonIgnore
 	public List<Course> getCourses() { return courses; }
 	public void setCourses(List<Course> courses) { this.courses = courses; }
+	@JsonIgnore
 	public List<Teacher> getTeachers() { return teachers; }
 	public void setTeachers(List<Teacher> teachers) { this.teachers = teachers; }
 }
