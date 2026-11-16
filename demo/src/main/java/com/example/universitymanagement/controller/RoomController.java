@@ -33,6 +33,18 @@ public class RoomController {
         return "room/form";
     }
 
+    @GetMapping("/{id}")
+    public String details(@PathVariable String id, Model model){
+        model.addAttribute("room", roomServ.getById(id));
+        return "room/details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable String id, Model model){
+        model.addAttribute("room", roomServ.getById(id));
+        return "room/form";
+    }
+
     @PostMapping
     public String save(@ModelAttribute Room room){
         roomServ.save(room);

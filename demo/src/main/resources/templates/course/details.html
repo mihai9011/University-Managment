@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Details</title>
+</head>
+<body>
+    <h1>Course Details</h1>
+
+    <table border="1">
+        <tr><th>ID</th><td th:text="${course.id}"></td></tr>
+        <tr><th>Title</th><td th:text="${course.title}"></td></tr>
+        <tr><th>Credits</th><td th:text="${course.credits}"></td></tr>
+        <tr><th>Semester</th><td th:text="${course.semester}"></td></tr>
+        <tr><th>Department ID</th><td th:text="${course.departmentId}"></td></tr>
+        <tr><th>Room ID</th><td th:text="${course.roomId}"></td></tr>
+    </table>
+
+    <br>
+    <a th:href="@{'/courses/' + ${course.id} + '/edit'}">Edit</a>
+    <a th:href="@{/courses}">Back to list</a>
+</body>
+</html>
