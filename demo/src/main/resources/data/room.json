@@ -1,0 +1,62 @@
+[
+  {
+    "capacity" : 30.0,
+    "number" : "A101",
+    "universityId" : "university-1",
+    "id" : "room-1"
+  },
+  {
+    "capacity" : 40.0,
+    "number" : "A102",
+    "universityId" : "university-1",
+    "id" : "room-2"
+  },
+  {
+    "capacity" : 120.0,
+    "number" : "B201",
+    "universityId" : "university-1",
+    "id" : "room-3"
+  },
+  {
+    "capacity" : 25.0,
+    "number" : "C001",
+    "universityId" : "university-2",
+    "id" : "room-4"
+  },
+  {
+    "capacity" : 60.0,
+    "number" : "C002",
+    "universityId" : "university-2",
+    "id" : "room-5"
+  },
+  {
+    "capacity" : 80.0,
+    "number" : "D10",
+    "universityId" : "university-3",
+    "id" : "room-6"
+  },
+  {
+    "capacity" : 35.0,
+    "number" : "D11",
+    "universityId" : "university-3",
+    "id" : "room-7"
+  },
+  {
+    "capacity" : 200.0,
+    "number" : "E5",
+    "universityId" : "university-4",
+    "id" : "room-8"
+  },
+  {
+    "capacity" : 45.0,
+    "number" : "F1",
+    "universityId" : "university-5",
+    "id" : "room-9"
+  },
+  {
+    "capacity" : 50.0,
+    "number" : "G3",
+    "universityId" : "university-6",
+    "id" : "room-10"
+  }
+]
