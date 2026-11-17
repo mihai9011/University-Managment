@@ -31,6 +31,8 @@
                 <td th:text="${course.departmentId}">D1</td>
                 <td th:text="${course.roomId}">R1</td>
                 <td>
+                    <a th:href="@{'/courses/' + ${course.id}}">Details</a>
+                    <a th:href="@{'/courses/' + ${course.id} + '/edit'}">Edit</a>
                     <form th:action="@{'/courses/' + ${course.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>

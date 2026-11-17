@@ -25,6 +25,8 @@
                 <td th:text="${university.name}">Babes-Bolyai</td>
                 <td th:text="${university.city}">Cluj-Napoca</td>
                 <td>
+                    <a th:href="@{'/universities/' + ${university.id}}">Details</a>
+                    <a th:href="@{'/universities/' + ${university.id} + '/edit'}">Edit</a>
                     <form th:action="@{'/universities/' + ${university.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>

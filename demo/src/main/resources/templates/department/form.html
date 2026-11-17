@@ -2,15 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Department</title>
+    <title>Department Form</title>
 </head>
 <body>
-    <h1>Add a New Department</h1>
+    <h1>Add or Edit Department</h1>
 
     <form th:action="@{/departments}" th:object="${department}" method="post">
 
+        <input type="hidden" th:field="*{id}" />
+
         <label>Name:</label>
         <input type="text" th:field="*{name}" required />
+        <br><br>
+
+        <label>University ID:</label>
+        <input type="text" th:field="*{universityId}" required />
         <br><br>
 
         <button type="submit">Save</button>

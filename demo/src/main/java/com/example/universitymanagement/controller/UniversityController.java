@@ -33,6 +33,18 @@ public class UniversityController {
         return "university/form";
     }
 
+    @GetMapping("/{id}")
+    public String details(@PathVariable String id, Model model){
+        model.addAttribute("university", universityServ.getById(id));
+        return "university/details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable String id, Model model){
+        model.addAttribute("university", universityServ.getById(id));
+        return "university/form";
+    }
+
     @PostMapping
     public String save(@ModelAttribute University university){
         universityServ.save(university);

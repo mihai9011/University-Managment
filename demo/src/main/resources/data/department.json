@@ -1,0 +1,52 @@
+[
+  {
+    "name" : "Computer Science",
+    "universityId" : "university-1",
+    "id" : "department-1"
+  },
+  {
+    "name" : "Mathematics",
+    "universityId" : "university-1",
+    "id" : "department-2"
+  },
+  {
+    "name" : "Physics",
+    "universityId" : "university-1",
+    "id" : "department-3"
+  },
+  {
+    "name" : "Automation",
+    "universityId" : "university-2",
+    "id" : "department-4"
+  },
+  {
+    "name" : "Electronics",
+    "universityId" : "university-2",
+    "id" : "department-5"
+  },
+  {
+    "name" : "Law",
+    "universityId" : "university-3",
+    "id" : "department-6"
+  },
+  {
+    "name" : "Chemistry",
+    "universityId" : "university-3",
+    "id" : "department-7"
+  },
+  {
+    "name" : "Mechanical Engineering",
+    "universityId" : "university-4",
+    "id" : "department-8"
+  },
+  {
+    "name" : "Economics",
+    "universityId" : "university-5",
+    "id" : "department-9"
+  },
+  {
+    "name" : "Medicine",
+    "universityId" : "university-6",
+    "id" : "department-10"
+  }
+]

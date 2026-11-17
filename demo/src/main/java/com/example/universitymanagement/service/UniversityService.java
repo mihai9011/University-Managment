@@ -25,6 +25,13 @@ public class UniversityService {
             throw new IllegalArgumentException("University name cannot be null or blank");
         }
 
+        // a re-save with a new object must not lose the existing departments and rooms
+        University existing = universityRepo.findById(university.getId());
+        if(existing != null){
+            university.setDepartments(existing.getDepartments());
+            university.setRooms(existing.getRooms());
+        }
+
         return universityRepo.save(university);
     }
 
@@ -43,8 +50,13 @@ public class UniversityService {
     }
 
     public void delete(String id){
-        if(!universityRepo.delete(id)){
-            throw new IllegalArgumentException("University with id " + id + " not found");
+        University university = getById(id);
+
+        // departments and rooms are real data, so they are not deleted with it and must not point to a missing university
+        if(!university.getDepartments().isEmpty() || !university.getRooms().isEmpty()){
+            throw new IllegalArgumentException("University with id " + id + " still has departments or rooms");
         }
+
+        universityRepo.delete(id);
     }
 }

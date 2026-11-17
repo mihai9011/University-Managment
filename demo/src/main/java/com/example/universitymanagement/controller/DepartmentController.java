@@ -33,6 +33,18 @@ public class DepartmentController {
         return "department/form";
     }
 
+    @GetMapping("/{id}")
+    public String details(@PathVariable String id, Model model){
+        model.addAttribute("department", departmentServ.getById(id));
+        return "department/details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable String id, Model model){
+        model.addAttribute("department", departmentServ.getById(id));
+        return "department/form";
+    }
+
     @PostMapping
     public String save(@ModelAttribute Department department){
         departmentServ.save(department);

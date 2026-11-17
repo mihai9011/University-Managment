@@ -1,0 +1,82 @@
+[
+  {
+    "title" : "Programming Fundamentals",
+    "credits" : 6,
+    "semester" : "1",
+    "departmentId" : "department-1",
+    "roomId" : "room-1",
+    "id" : "course-1"
+  },
+  {
+    "title" : "Data Structures",
+    "credits" : 6,
+    "semester" : "2",
+    "departmentId" : "department-1",
+    "roomId" : "room-2",
+    "id" : "course-2"
+  },
+  {
+    "title" : "Databases",
+    "credits" : 5,
+    "semester" : "3",
+    "departmentId" : "department-1",
+    "roomId" : "room-3",
+    "id" : "course-3"
+  },
+  {
+    "title" : "Linear Algebra",
+    "credits" : 5,
+    "semester" : "1",
+    "departmentId" : "department-2",
+    "roomId" : "room-2",
+    "id" : "course-4"
+  },
+  {
+    "title" : "Calculus",
+    "credits" : 6,
+    "semester" : "2",
+    "departmentId" : "department-2",
+    "roomId" : "room-3",
+    "id" : "course-5"
+  },
+  {
+    "title" : "Mechanics",
+    "credits" : 5,
+    "semester" : "1",
+    "departmentId" : "department-3",
+    "roomId" : "room-1",
+    "id" : "course-6"
+  },
+  {
+    "title" : "Control Systems",
+    "credits" : 6,
+    "semester" : "4",
+    "departmentId" : "department-4",
+    "roomId" : "room-4",
+    "id" : "course-7"
+  },
+  {
+    "title" : "Digital Circuits",
+    "credits" : 5,
+    "semester" : "3",
+    "departmentId" : "department-5",
+    "roomId" : "room-5",
+    "id" : "course-8"
+  },
+  {
+    "title" : "Constitutional Law",
+    "credits" : 4,
+    "semester" : "1",
+    "departmentId" : "department-6",
+    "roomId" : "room-6",
+    "id" : "course-9"
+  },
+  {
+    "title" : "Microeconomics",
+    "credits" : 5,
+    "semester" : "2",
+    "departmentId" : "department-9",
+    "roomId" : "room-9",
+    "id" : "course-10"
+  }
+]

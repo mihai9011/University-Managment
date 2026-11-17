@@ -16,6 +16,7 @@
                 <th>ID</th>
                 <th>Number</th>
                 <th>Capacity</th>
+                <th>University ID</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,7 +25,10 @@
                 <td th:text="${room.id}">1</td>
                 <td th:text="${room.number}">A101</td>
                 <td th:text="${room.capacity}">30</td>
+                <td th:text="${room.universityId}">1</td>
                 <td>
+                    <a th:href="@{'/rooms/' + ${room.id}}">Details</a>
+                    <a th:href="@{'/rooms/' + ${room.id} + '/edit'}">Edit</a>
                     <form th:action="@{'/rooms/' + ${room.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>

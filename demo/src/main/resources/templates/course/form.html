@@ -2,12 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Course</title>
+    <title>Course Form</title>
 </head>
 <body>
-    <h1>Add a New Course</h1>
+    <h1>Add or Edit Course</h1>
 
     <form th:action="@{/courses}" th:object="${course}" method="post">
+
+        <input type="hidden" th:field="*{id}" />
 
         <label>Title:</label>
         <input type="text" th:field="*{title}" required />

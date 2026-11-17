@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import com.example.universitymanagement.model.Room;
 
 @Repository
-public class RoomRepository extends BaseRepo<Room> {
-    RoomRepository(){};
+public class RoomRepository extends InFileRepository<Room> {
+    RoomRepository(){
+        super("room.json", Room.class);
+    }
 }

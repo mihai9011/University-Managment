@@ -1,0 +1,52 @@
+[
+  {
+    "name" : "Babes-Bolyai University",
+    "city" : "Cluj-Napoca",
+    "id" : "university-1"
+  },
+  {
+    "name" : "Technical University of Cluj-Napoca",
+    "city" : "Cluj-Napoca",
+    "id" : "university-2"
+  },
+  {
+    "name" : "University of Bucharest",
+    "city" : "Bucharest",
+    "id" : "university-3"
+  },
+  {
+    "name" : "Politehnica University of Bucharest",
+    "city" : "Bucharest",
+    "id" : "university-4"
+  },
+  {
+    "name" : "Alexandru Ioan Cuza University",
+    "city" : "Iasi",
+    "id" : "university-5"
+  },
+  {
+    "name" : "West University of Timisoara",
+    "city" : "Timisoara",
+    "id" : "university-6"
+  },
+  {
+    "name" : "University of Oradea",
+    "city" : "Oradea",
+    "id" : "university-7"
+  },
+  {
+    "name" : "Lucian Blaga University of Sibiu",
+    "city" : "Sibiu",
+    "id" : "university-8"
+  },
+  {
+    "name" : "Transilvania University of Brasov",
+    "city" : "Brasov",
+    "id" : "university-9"
+  },
+  {
+    "name" : "University of Craiova",
+    "city" : "Craiova",
+    "id" : "university-10"
+  }
+]
