@@ -9,6 +9,8 @@ import com.example.universitymanagement.model.Staff;
 import com.example.universitymanagement.model.TeachingAssignment;
 import com.example.universitymanagement.repository.Repo;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class TeachingAssignmentService {
     // injecting repos to avoid circular dependencies
@@ -96,5 +98,13 @@ public class TeachingAssignmentService {
         unlink(id);
 
         System.out.println("TeachingAssignment with id " + id + " deleted.");
+    }
+
+    @PostConstruct
+    void linkLoadedAssignments() {
+        for (TeachingAssignment ta : taRepo.findAll()) {
+            courseRepo.findById(ta.getCourseId()).getAssignments().add(ta);
+            staffRepo.findById(ta.getStaffId()).getAssignments().add(ta);
+        }
     }
 }

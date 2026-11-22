@@ -37,19 +37,29 @@ public class StaffController {
         if ("assistant".equalsIgnoreCase(staffDto.getType())) {
             Assistant assistant = new Assistant();
 
+            //if its editing, keeping the old id
+            if (staffDto.getId() != null && !staffDto.getId().isBlank()) {
+                assistant.setId(staffDto.getId());
+            }
+
             assistant.setName(staffDto.getName());
             assistant.setRole(AssistantRole.valueOf(staffDto.getAssistantRole())); 
-            
+        
             staffService.save(assistant);
         } else {
             Teacher teacher = new Teacher();
+
+            // if its editing, keeping the old id
+            if (staffDto.getId() != null && !staffDto.getId().isBlank()) {
+                teacher.setId(staffDto.getId());
+            }
 
             teacher.setName(staffDto.getName());
             teacher.setTitle(staffDto.getTitle());
             teacher.setDepartmentId(staffDto.getDepartmentId());
             teacher.setEmail(staffDto.getEmail());
             teacher.setHireDate(staffDto.getHireDate());
-            
+        
             staffService.save(teacher);
         }
         

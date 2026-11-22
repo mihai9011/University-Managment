@@ -9,6 +9,7 @@ import com.example.universitymanagement.model.Enrollment;
 import com.example.universitymanagement.model.Student;
 import com.example.universitymanagement.repository.Repo;
 
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class EnrollmentService {
@@ -92,5 +93,13 @@ public class EnrollmentService {
         unlink(id);
 
         System.out.println("Enrollment with id " + id + " deleted.");
+    }
+
+    @PostConstruct
+    void linkLoadedEnrollments() {
+        for (Enrollment enrollment : enrollmentRepo.findAll()) {
+            studentRepo.findById(enrollment.getStudentId()).getEnrollments().add(enrollment);
+            courseRepo.findById(enrollment.getCourseId()).getEnrollments().add(enrollment);
+        }
     }
 }
