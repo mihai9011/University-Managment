@@ -1,0 +1,74 @@
+[
+  {
+    "courseId" : "course-1",
+    "staffId" : "staff-1",
+    "managing" : "COURSE",
+    "id" : "assignment-1"
+  },
+  {
+    "courseId" : "course-1",
+    "staffId" : "staff-8",
+    "managing" : "LAB",
+    "id" : "assignment-2"
+  },
+  {
+    "courseId" : "course-2",
+    "staffId" : "staff-2",
+    "managing" : "COURSE",
+    "id" : "assignment-3"
+  },
+  {
+    "courseId" : "course-2",
+    "staffId" : "staff-9",
+    "managing" : "SEMINAR",
+    "id" : "assignment-4"
+  },
+  {
+    "courseId" : "course-3",
+    "staffId" : "staff-1",
+    "managing" : "COURSE",
+    "id" : "assignment-5"
+  },
+  {
+    "courseId" : "course-4",
+    "staffId" : "staff-3",
+    "managing" : "COURSE",
+    "id" : "assignment-6"
+  },
+  {
+    "courseId" : "course-4",
+    "staffId" : "staff-4",
+    "managing" : "SEMINAR",
+    "id" : "assignment-7"
+  },
+  {
+    "courseId" : "course-5",
+    "staffId" : "staff-4",
+    "managing" : "COURSE",
+    "id" : "assignment-8"
+  },
+  {
+    "courseId" : "course-6",
+    "staffId" : "staff-5",
+    "managing" : "COURSE",
+    "id" : "assignment-9"
+  },
+  {
+    "courseId" : "course-7",
+    "staffId" : "staff-6",
+    "managing" : "COURSE",
+    "id" : "assignment-10"
+  },
+  {
+    "courseId" : "course-8",
+    "staffId" : "staff-6",
+    "managing" : "LAB",
+    "id" : "assignment-11"
+  },
+  {
+    "courseId" : "course-9",
+    "staffId" : "staff-7",
+    "managing" : "COURSE",
+    "id" : "assignment-12"
+  }
+]
