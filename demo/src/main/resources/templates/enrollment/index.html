@@ -27,6 +27,8 @@
                 <td th:text="${enrol.courseId}">C1</td>
                 <td th:text="${enrol.grade}">NA</td>
                 <td>
+                    <a th:href="@{'/enrollments/' + ${enrol.id}}">Details</a>
+                    <a th:href="@{'/enrollments/' + ${enrol.id} + '/edit'}">Edit</a>
                     <form th:action="@{'/enrollments/' + ${enrol.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>

@@ -28,6 +28,19 @@ public class EnrollmentController {
         return "enrollment/form";
     }
 
+    @GetMapping("/{id}")
+    public String details(@PathVariable String id, Model model){
+        model.addAttribute("enrollment",  enrollmentService.getById(id));
+        return "enrollment/details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable String id, Model model){
+        model.addAttribute("enrollment",  enrollmentService.getById(id));
+        return "enrollment/form";
+    }
+
+
     @PostMapping
     public String save(@ModelAttribute Enrollment enrollment) {
         enrollmentService.save(enrollment);

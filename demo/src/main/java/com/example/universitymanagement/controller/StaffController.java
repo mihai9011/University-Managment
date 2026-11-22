@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.universitymanagement.model.StaffDTO;
 import com.example.universitymanagement.model.Assistant;
 import com.example.universitymanagement.model.AssistantRole;
+import com.example.universitymanagement.model.Staff;
 import com.example.universitymanagement.model.Teacher;
 import com.example.universitymanagement.service.StaffService;
 
@@ -29,6 +30,34 @@ public class StaffController {
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("staffDto", new StaffDTO()); 
+        return "staff/form";
+    }
+
+    @GetMapping("/{id}")
+    public String details(@PathVariable String id, Model model) {
+        model.addAttribute("staff", staffService.getById(id));
+        return "staff/details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable String id, Model model) {
+        Staff staff = staffService.getById(id);
+        StaffDTO dto = new StaffDTO();
+        dto.setId(staff.getId());
+        dto.setName(staff.getName());
+        
+        if (staff instanceof Teacher teacher) {
+            dto.setType("teacher");
+            dto.setTitle(teacher.getTitle());
+            dto.setDepartmentId(teacher.getDepartmentId());
+            dto.setEmail(teacher.getEmail());
+            dto.setHireDate(teacher.getHireDate());
+        } else if (staff instanceof Assistant assistant) {
+            dto.setType("assistant");
+            dto.setAssistantRole(assistant.getRole() != null ? assistant.getRole().name() : null);
+        }
+        
+        model.addAttribute("staffDto", dto);
         return "staff/form";
     }
 

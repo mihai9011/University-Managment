@@ -28,6 +28,19 @@ public class TeachingAssignmentController {
         return "teachingassignment/form";
     }
 
+    @GetMapping("/{id}")
+    public String details(@PathVariable String id, Model model){
+        model.addAttribute("teachingAssignment", teachingAssignmentService.getById(id));
+        return "teachingassignment/details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable String id, Model model){
+        model.addAttribute("teachingAssignment", teachingAssignmentService.getById(id));
+        return "teachingassignment/form";
+    }
+
+
     @PostMapping
     public String save(@ModelAttribute TeachingAssignment teachingAssignment) {
         teachingAssignmentService.save(teachingAssignment);

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Enrollment Details</title>
+</head>
+<body>
+    <h1>Enrollment Details</h1>
+
+    <table border="1">
+        <tr><th>ID</th><td th:text="${enrollment.id}"></td></tr>
+        <tr><th>Student ID</th><td th:text="${enrollment.studentId}"></td></tr>
+        <tr><th>Course ID</th><td th:text="${enrollment.courseId}"></td></tr>
+        <tr><th>Grade</th><td th:text="${enrollment.grade}"></td></tr>
+    </table>
+
+    <br>
+    <a th:href="@{'/enrollments/' + ${enrollment.id} + '/edit'}">Edit</a>
+    <a th:href="@{/enrollments}">Back to list</a>
+</body>
+</html>

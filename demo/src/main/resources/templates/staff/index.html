@@ -23,6 +23,8 @@
                 <td th:text="${staff.id}">1</td>
                 <td th:text="${staff.name}">Jane Smith</td>
                 <td>
+                    <a th:href="@{'/staff/' + ${staff.id}}">Details</a>
+                    <a th:href="@{'/staff/' + ${staff.id} + '/edit'}">Edit</a>
                     <form th:action="@{'/staff/' + ${staff.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>
