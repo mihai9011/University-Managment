@@ -1,0 +1,83 @@
+[
+  {
+    "type" : "teacher",
+    "name" : "Alexandru Popa",
+    "title" : "Professor",
+    "departmentId" : "department-1",
+    "email" : "alexandru.popa@cs.ubbcluj.ro",
+    "hireDate" : "2012-10-01",
+    "id" : "staff-1"
+  },
+  {
+    "type" : "teacher",
+    "name" : "Simona Vasilescu",
+    "title" : "Associate Professor",
+    "departmentId" : "department-1",
+    "email" : "simona.vasilescu@cs.ubbcluj.ro",
+    "hireDate" : "2015-03-15",
+    "id" : "staff-2"
+  },
+  {
+    "type" : "teacher",
+    "name" : "Mircea Georgescu",
+    "title" : "Lecturer",
+    "departmentId" : "department-2",
+    "email" : "mircea.georgescu@math.ubbcluj.ro",
+    "hireDate" : "2018-09-01",
+    "id" : "staff-3"
+  },
+  {
+    "type" : "teacher",
+    "name" : "Camelia Constantinescu",
+    "title" : "Professor",
+    "departmentId" : "department-2",
+    "email" : "camelia.constantinescu@math.ubbcluj.ro",
+    "hireDate" : "2010-02-01",
+    "id" : "staff-4"
+  },
+  {
+    "type" : "teacher",
+    "name" : "Dan Nistor",
+    "title" : "Associate Professor",
+    "departmentId" : "department-3",
+    "email" : "dan.nistor@phys.ubbcluj.ro",
+    "hireDate" : "2016-10-01",
+    "id" : "staff-5"
+  },
+  {
+    "type" : "teacher",
+    "name" : "Ramona Iliescu",
+    "title" : "Lecturer",
+    "departmentId" : "department-4",
+    "email" : "ramona.iliescu@auto.utcluj.ro",
+    "hireDate" : "2019-11-01",
+    "id" : "staff-6"
+  },
+  {
+    "type" : "teacher",
+    "name" : "Gabriel Florea",
+    "title" : "Professor",
+    "departmentId" : "department-6",
+    "email" : "gabriel.florea@law.unibuc.ro",
+    "hireDate" : "2008-10-01",
+    "id" : "staff-7"
+  },
+  {
+    "type" : "assistant",
+    "name" : "Radu Moldovan",
+    "role" : "LAB",
+    "id" : "staff-8"
+  },
+  {
+    "type" : "assistant",
+    "name" : "Andreea Tudor",
+    "role" : "TA",
+    "id" : "staff-9"
+  },
+  {
+    "type" : "assistant",
+    "name" : "Paul Diaconescu",
+    "role" : "GRADER",
+    "id" : "staff-10"
+  }
+]

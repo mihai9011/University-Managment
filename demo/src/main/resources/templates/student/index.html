@@ -27,6 +27,8 @@
                 <td th:text="${student.email}">john@ubb.ro</td>
                 <td th:text="${student.birthDate}">2004-05-15</td>
                 <td>
+                    <a th:href="@{'/students/' + ${student.id}}">Details</a>
+                    <a th:href="@{'/students/' + ${student.id} + '/edit'}">Edit</a>
                     <form th:action="@{'/students/' + ${student.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>

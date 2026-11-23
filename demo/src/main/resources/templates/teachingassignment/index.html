@@ -27,6 +27,8 @@
                 <td th:text="${ta.staffId}">T1</td>
                 <td th:text="${ta.managing}">LAB</td>
                 <td>
+                    <a th:href="@{'/teachingassignments/' + ${ta.id}}">Details</a>
+                    <a th:href="@{'/teachingassignments/' + ${ta.id} + '/edit'}">Edit</a>
                     <form th:action="@{'/teachingassignments/' + ${ta.id} + '/delete'}" method="post">
                         <button type="submit">Delete</button>
                     </form>

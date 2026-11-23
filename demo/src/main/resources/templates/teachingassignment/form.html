@@ -2,12 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Teaching Assignment</title>
+    <title>Teaching Assignment Form</title>
 </head>
 <body>
-    <h1>Add a New Teaching Assignment</h1>
+    <h1>Add or Edit Teaching Assignment</h1>
 
     <form th:action="@{/teachingassignments}" th:object="${teachingAssignment}" method="post">
+
+        <input type="hidden" th:field="*{id}" />
 
         <label>Course ID:</label>
         <input type="text" th:field="*{courseId}" required />

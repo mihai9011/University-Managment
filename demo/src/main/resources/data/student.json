@@ -1,0 +1,62 @@
+[
+  {
+    "name" : "Andrei Popescu",
+    "email" : "andrei.popescu@stud.ubbcluj.ro",
+    "birthDate" : "2003-04-12",
+    "id" : "student-1"
+  },
+  {
+    "name" : "Elena Ionescu",
+    "email" : "elena.ionescu@stud.ubbcluj.ro",
+    "birthDate" : "2002-11-25",
+    "id" : "student-2"
+  },
+  {
+    "name" : "Mihai Radu",
+    "email" : "mihai.radu@stud.ubbcluj.ro",
+    "birthDate" : "2003-08-03",
+    "id" : "student-3"
+  },
+  {
+    "name" : "Ana Dumitrescu",
+    "email" : "ana.dumitrescu@stud.ubbcluj.ro",
+    "birthDate" : "2004-01-19",
+    "id" : "student-4"
+  },
+  {
+    "name" : "Vlad Stoica",
+    "email" : "vlad.stoica@stud.ubbcluj.ro",
+    "birthDate" : "2003-06-30",
+    "id" : "student-5"
+  },
+  {
+    "name" : "Ioana Enache",
+    "email" : "ioana.enache@stud.ubbcluj.ro",
+    "birthDate" : "2002-09-14",
+    "id" : "student-6"
+  },
+  {
+    "name" : "Cristian Stan",
+    "email" : "cristian.stan@stud.ubbcluj.ro",
+    "birthDate" : "2003-12-05",
+    "id" : "student-7"
+  },
+  {
+    "name" : "Maria Gheorghiu",
+    "email" : "maria.gheorghiu@stud.ubbcluj.ro",
+    "birthDate" : "2004-03-22",
+    "id" : "student-8"
+  },
+  {
+    "name" : "Stefan Dobre",
+    "email" : "stefan.dobre@stud.ubbcluj.ro",
+    "birthDate" : "2002-07-17",
+    "id" : "student-9"
+  },
+  {
+    "name" : "Diana Marin",
+    "email" : "diana.marin@stud.ubbcluj.ro",
+    "birthDate" : "2003-10-09",
+    "id" : "student-10"
+  }
+]

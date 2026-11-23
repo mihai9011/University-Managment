@@ -28,6 +28,18 @@ public class StudentController {
         return "student/form";
     }
 
+    @GetMapping("/{id}")
+    public String details(@PathVariable String id, Model model){
+        model.addAttribute("student",  studentService.getById(id));
+        return "student/details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable String id, Model model){
+        model.addAttribute("student",  studentService.getById(id));
+        return "student/form";
+    }
+
     @PostMapping
     public String save(@ModelAttribute Student student) {
         studentService.save(student);

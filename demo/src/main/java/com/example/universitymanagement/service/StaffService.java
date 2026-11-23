@@ -13,6 +13,8 @@ import com.example.universitymanagement.model.Teacher;
 import com.example.universitymanagement.model.TeachingAssignment;
 import com.example.universitymanagement.repository.Repo;
 
+import jakarta.annotation.PostConstruct;
+
 
 @Service
 public class StaffService implements ValidatableService{
@@ -167,5 +169,14 @@ public class StaffService implements ValidatableService{
         unlinkFromDepartments(id);
 
         System.out.println("Staff with id " + id + " deleted.");
+    }
+
+    @PostConstruct
+    void linkLoadedTeachers() {
+        for (Staff staff : staffRepo.findAll()) {
+            if (staff instanceof Teacher teacher) {
+                depRepo.findById(teacher.getDepartmentId()).getTeachers().add(teacher);
+            }
+        }
     }
 }

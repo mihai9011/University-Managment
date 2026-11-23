@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Student extends BaseEntity {
 	private String name;
 	private String email; // neue Eigenschaft (Aufgabe 5)
@@ -24,6 +26,7 @@ public class Student extends BaseEntity {
 	public void setEmail(String email) { this.email = email; }
 	public LocalDate getBirthDate() { return birthDate; }
 	public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+	@JsonIgnore
 	public List<Enrollment> getEnrollments() { return enrollments; }
 	public void setEnrollments(List<Enrollment> enrollments) { this.enrollments = enrollments; }
 }
