@@ -20,12 +20,13 @@ public abstract class InFileRepository<T extends BaseEntity> implements Repo<T> 
 
     private final Path path;
     private final List<T> entities;
+    private final JavaType listType;
 
     protected InFileRepository(String file, Class<T> type) {
         path = Path.of(dir, file);
+        listType = mapper.getTypeFactory().constructCollectionType(List.class, type);
 
         if (Files.exists(path)) {
-            JavaType listType = mapper.getTypeFactory().constructCollectionType(List.class, type);
             entities = new ArrayList<>(mapper.<List<T>>readValue(path.toFile(), listType));
         } else {
             entities = new ArrayList<>();
@@ -67,7 +68,7 @@ public abstract class InFileRepository<T extends BaseEntity> implements Repo<T> 
     private void write() {
         try {
             Files.createDirectories(path.getParent());
-            mapper.writeValue(path.toFile(), entities);
+            mapper.writerFor(listType).writeValue(path.toFile(), entities);
         } catch (IOException e) {
             throw new UncheckedIOException("Could not write " + path, e);
         }
